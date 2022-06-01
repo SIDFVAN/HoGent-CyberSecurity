@@ -39,6 +39,10 @@ crunch 6 8 abcdef -o custom.txt   # create custom wordlist
 aircrack-ng -w custom.txt wpa-medium-01.cap
 ```
 
+### aircrack usage examples
+
+<https://www.kali.org/tools/aircrack-ng/>
+
 ## Update locate
 
 ```console
