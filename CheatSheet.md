@@ -285,3 +285,63 @@ xxd -r supes.hex > supes.jpg
 ```console
 echo -n "Hello" | od -A n -t x1
 ```
+
+### dd
+
+Manipulate files on a byte level
+
+```console
+sudo dd if=/dev/sda bs=512 count=1 of=mbr.img
+```
+
+Create a backup from the first 512 bytes of the sda partition --> backup of the mbr
+
+```console
+sudo dd if=/dev/cdrom of=/mycd.iso
+```
+
+Create a backup from a file/cdrom
+
+```console
+sudo dd if=/dev/zero bs=1M of=/dev/sdx (with x for example a: /dev/sda)
+```
+
+Wiping a device
+
+Now take a look at the following one-liner and do run it:
+
+```console
+dd if=/dev/zero of=file bs=1024K count=500.
+```
+
+Analyze the file: how big is it, what are the contents?
+
+500MB, all filled with zeros
+
+Create a file, using dd, that writes 100 random bytes in a file.
+
+```console
+dd if=/dev/urandom of=file bs=1 count=100
+```
+
+Finally, try to figure out a way, using dd, to make a duplicate of a file but skipping the first 20 bytes of the file.
+
+```console
+dd if=file of=export_without_first_20_and_last_16 skip=20 seek=16 bs=1 count=80
+```
+
+The final (and a bit harder) challenge
+
+```console
+xxd challenge | head --> we see the PNG!
+Use the xxd, edit, xxd -r technice to change the 8850 to 8950
+Use dd to skip the first 18 bytes: dd if=c of=solved bs=1 skip=18
+```
+
+## Nmap en scan
+
+### Powershell ping sweep
+
+```powershell
+1..20 | % {"192.168.1.$($_): $(Test-Connection -count 1 -comp 192.168.1.$($_) -quiet)"}
+```
