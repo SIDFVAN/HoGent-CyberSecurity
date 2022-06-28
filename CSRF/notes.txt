@@ -15,3 +15,17 @@ In order for a CSRF attack to b possible :
 
 
 
+Lab # 2 : CSRF where token validation depends on token being present
+
+Vulnerable parameter : Email change functionality
+
+Goal : Exploit the CSRF vulnerability and change the email address
+
+Credentials : wiener:peter
+
+Analysis : 
+
+In order for a CSRF attack to b possible :
+- A relevant action - email change funci
+- Cookie based session  - yes sessio ID
+- No unpredictable request parameters : yes, email only
