@@ -159,7 +159,7 @@ dnf install nano          # Install basic text editor, requires internet! Altern
 nano /etc/sysconfig/network-scripts/ifcfg-enp0s3
 ```
 
-### Add the following lines to the interface file:
+### Add the following lines to the interface file
 
 ```console
 TYPE=Ethernet
@@ -200,14 +200,14 @@ systemctl start dhcpd
 systemctl enable dhcpd
 ```
 
-## static analysis
+## static file analysis
 
 ### filehash
 
 windows
 
 ```powershell
-Get-FileHash notepad.ede
+Get-FileHash notepad.exe
 ```
 
 Linux
@@ -218,10 +218,50 @@ sha256sum notepad.exe
 
 ### file
 
+helps determine the type of a file and its data
+
 ```console
-file *
-file <filename>
+file [option] [file name]
 ```
+
+Using the -s option lets you fully test special files:
+
+```console
+sudo file -s /dev/sda5
+```
+
+Use the -z option to fully test compressed files, trying to detect their content:
+
+```console
+file -z install.tar.gz
+```
+
+### od
+
+placeholder
+
+### xxd / hexdump
+
+The xxd command is a hex dumper. This means it takes a standard input or a file and then converts it to hexadecimal. It can also convert hex dump back to binary form.
+
+```console
+xxd [options] [file]
+```
+
+Binary Display
+
+```console
+xxd -b datafile.txt
+```
+
+Reverse Operation
+
+xxd also offers to reverse a hex dump back to binary using the -r option.
+
+```console
+xxd -b datafile.txt
+```
+
 
 ### rename a file
 
@@ -254,6 +294,8 @@ How many hexadecimal numbers do we need to represent a byte?
 26 (16+10)
 
 ### strings
+
+Het stringscommando zal een poging doen om alle tekst (ASCII) uit een bestand te interpreteren en te tonen.
 
 ```console
 strings pdf | grep --text -i "author"
