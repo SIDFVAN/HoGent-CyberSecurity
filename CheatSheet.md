@@ -238,7 +238,21 @@ file -z install.tar.gz
 
 ### od
 
-placeholder
+od command in Linux is used to convert the content of input in different formats with octal format as the default format
+
+```console
+od [OPTION]... [FILE]...
+```
+
+Displays the contents of input in octal format.
+
+```console
+od -b input.txt
+```
+![Alt text](images/od-command1.png)
+
+
+
 
 ### xxd / hexdump
 
@@ -259,9 +273,18 @@ Reverse Operation
 xxd also offers to reverse a hex dump back to binary using the -r option.
 
 ```console
-xxd -b datafile.txt
+xxd -r filename or xxd -r -p inputhexfile.txt output.bin
 ```
 
+![Alt text](images/xxd-r-11-2022-09.webp)
+
+To revert by skipping the first character, take input from piped standard out:
+
+```console
+echo '6865 6c6f 0a' | xxd -r -p
+```
+
+![Alt text](images/skip-character-xxd-182022.webp)
 
 ### rename a file
 
