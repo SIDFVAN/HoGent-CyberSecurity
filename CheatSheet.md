@@ -288,7 +288,6 @@ echo '6865 6c6f 0a' | xxd -r -p
 hexdump -C
 ```
 
-
 ![Alt text](images/Screenshot%202023-02-23%20113423.png)
 
 ### rename a file
