@@ -249,10 +249,8 @@ Displays the contents of input in octal format.
 ```console
 od -b input.txt
 ```
+
 ![Alt text](images/od-command1.png)
-
-
-
 
 ### xxd / hexdump
 
@@ -285,6 +283,13 @@ echo '6865 6c6f 0a' | xxd -r -p
 ```
 
 ![Alt text](images/skip-character-xxd-182022.webp)
+
+```console
+hexdump -C
+```
+
+
+![Alt text](images/Screenshot%202023-02-23%20113423.png)
 
 ### rename a file
 
@@ -324,6 +329,8 @@ Het stringscommando zal een poging doen om alle tekst (ASCII) uit een bestand te
 strings pdf | grep --text -i "author"
 ```
 
+![Alt text](images/Screenshot%202023-02-23%20114056.png)
+
 ### wget
 
 ```console
@@ -339,7 +346,7 @@ wget -O filename.zip http://www.domain.com/filename-4.0.1.zip
 Try to change the comment "LEAD Technologies Inc. V1.01" to "AAAA Technologies".
 
 ```console
-xxd superman.jpg > supes.hex
+xxd Superman-Logo.jpg > supes.hex
 vim supes.hex
 Change to 41 (A in Hex)
 xxd -r supes.hex > supes.jpg
@@ -350,6 +357,28 @@ xxd -r supes.hex > supes.jpg
 ```console
 echo -n "Hello" | od -A n -t x1
 ```
+
+### not stripped
+
+ it contains debugging information. That means for each instruction there is information which line of the source code generated it, the name of the variables in the source code is retained and can be associated to the matching memory at runtime etc
+
+### dynamically linked
+
+It uses shared libraries, in other words not everything "needed" by the executable is in the executable itself. You can see the dependencies with ldd.
+
+### find shared libraries in executable
+
+file evil
+
+![Alt text](images/Screenshot%202023-02-23%20162830.png)
+
+readelf -a evil | grep -i shared
+
+![Alt text](images/Screenshot%202023-02-23%20163009.png)
+
+sudo find / -name "libc.so.6" 2>/dev/null
+
+![Alt text](images/Screenshot%202023-02-23%20163224.png)
 
 ### dd
 
@@ -395,13 +424,49 @@ Finally, try to figure out a way, using dd, to make a duplicate of a file but sk
 dd if=file of=export_without_first_20_and_last_16 skip=20 seek=16 bs=1 count=80
 ```
 
-The final (and a bit harder) challenge
+### The final (and a bit harder) challenge
+
+```console
+file challenge 
+```
+
+--> shows "data" :(
+
+![Alt text](images/Screenshot%202023-02-23%20164744.png)
+
+```console
+strings challenge 
+```
+
+--> shows something weird: "hiddeninplainsight" but nothing more; we do see "rgb" (foreshadowing: if you would use strings -3 you would notice PNG as well)
+
+![Alt text](images/Screenshot%202023-02-23%20164807.png)
+
+```console
+xxd challenge | head 
+```
+
+![Alt text](images/Screenshot%202023-02-23%20165132.png)
+
+--> we see the PNG!
+Think for a minute and zoom out: we see PNG in hex but file is not showing png, it says "data"? --> Why? --> because something is wrong with the header.
+
+a.first bytes (hiddeninplainsight) need to be removed
+b. When closely looking at the header the 8850 needs to be 8950, see wikipedia for the header of a PNG file.
+
+![Alt text](images/Screenshot%202023-02-23%20165501.png)
 
 ```console
 xxd challenge | head --> we see the PNG!
-Use the xxd, edit, xxd -r technice to change the 8850 to 8950
-Use dd to skip the first 18 bytes: dd if=c of=solved bs=1 skip=18
+xxd challenge > challenge.hex
+vim ./challenge.hex
+xxd -r challenge.hex challenge2
+dd if=challenge2 of=challengeFixed bs=1 skip=18
 ```
+
+![Alt text](images/Screenshot%202023-02-23%20165711.png)
+![Alt text](images/Screenshot%202023-02-23%20170258.png)
+![Alt text](images/Screenshot%202023-02-23%20170320.png)
 
 ## Nmap en scan
 
